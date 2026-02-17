@@ -1,0 +1,1153 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AI Sans Jargon – Maîtriser l'IA dans ton Travail</title>
+  <style>
+    :root {
+      --primary: #6C3AEA;
+      --accent: #00D2FF;
+      --bg-dark: #0D0D1A;
+      --bg-card: #14142B;
+      --bg-card2: #1A1A35;
+      --text: #E8E8F0;
+      --text-muted: #9090BB;
+      --highlight: #FFD166;
+      --green: #06D6A0;
+      --red: #EF233C;
+      --gradient: linear-gradient(135deg, #6C3AEA, #00D2FF);
+      --gradient2: linear-gradient(135deg, #FFD166, #FF6B6B);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: var(--bg-dark);
+      color: var(--text);
+      line-height: 1.7;
+      font-size: 16px;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(13,13,26,.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(108,58,234,.3);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 32px;
+    }
+    .nav-logo { font-weight: 800; font-size: 1.1rem; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .nav-links { display: flex; gap: 24px; }
+    .nav-links a { color: var(--text-muted); text-decoration: none; font-size: .9rem; transition: color .2s; }
+    .nav-links a:hover { color: var(--accent); }
+    .nav-badge { background: var(--gradient); color: #fff; font-size: .75rem; padding: 5px 14px; border-radius: 99px; font-weight: 700; }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      background: radial-gradient(ellipse at 30% 40%, rgba(108,58,234,.35) 0%, transparent 60%),
+                  radial-gradient(ellipse at 75% 70%, rgba(0,210,255,.2) 0%, transparent 55%),
+                  var(--bg-dark);
+      display: flex; align-items: center; justify-content: center;
+      text-align: center; padding: 140px 24px 80px;
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%236C3AEA' fill-opacity='0.06'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    .hero-content { position: relative; max-width: 780px; }
+    .hero-badge {
+      display: inline-block; background: rgba(108,58,234,.2);
+      border: 1px solid rgba(108,58,234,.5); color: var(--accent);
+      padding: 6px 18px; border-radius: 99px; font-size: .8rem; font-weight: 700;
+      letter-spacing: .05em; text-transform: uppercase; margin-bottom: 28px;
+    }
+    .hero h1 {
+      font-size: clamp(2.2rem, 5vw, 3.8rem);
+      font-weight: 900; line-height: 1.15; margin-bottom: 24px;
+    }
+    .hero h1 span { background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .hero p { font-size: 1.15rem; color: var(--text-muted); max-width: 580px; margin: 0 auto 40px; }
+    .hero-cta { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+    .btn-primary {
+      background: var(--gradient); color: #fff; padding: 15px 36px; border-radius: 50px;
+      font-weight: 800; font-size: 1rem; text-decoration: none; border: none; cursor: pointer;
+      box-shadow: 0 8px 30px rgba(108,58,234,.4); transition: transform .2s, box-shadow .2s;
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(108,58,234,.6); }
+    .btn-outline {
+      border: 2px solid rgba(108,58,234,.5); color: var(--text);
+      padding: 13px 30px; border-radius: 50px; font-weight: 700; font-size: 1rem;
+      text-decoration: none; transition: border-color .2s, color .2s;
+    }
+    .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+    .hero-stats { display: flex; gap: 40px; justify-content: center; margin-top: 64px; flex-wrap: wrap; }
+    .hero-stat strong { display: block; font-size: 1.9rem; font-weight: 900; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .hero-stat span { font-size: .85rem; color: var(--text-muted); }
+
+    /* ── SECTIONS ── */
+    section { padding: 100px 24px; max-width: 1100px; margin: 0 auto; }
+    .section-label {
+      display: inline-block; text-transform: uppercase; letter-spacing: .1em;
+      font-size: .75rem; font-weight: 700; color: var(--accent); margin-bottom: 14px;
+    }
+    h2 { font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 900; line-height: 1.2; margin-bottom: 20px; }
+    h2 span { background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .subtitle { font-size: 1.05rem; color: var(--text-muted); max-width: 620px; margin-bottom: 56px; }
+
+    /* ── TOC ── */
+    #toc { background: var(--bg-card); border-radius: 24px; padding: 56px; border: 1px solid rgba(108,58,234,.2); }
+    .toc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+    .toc-item {
+      display: flex; align-items: center; gap: 14px;
+      background: var(--bg-card2); padding: 18px 22px; border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.06); cursor: pointer;
+      transition: border-color .2s, transform .15s; text-decoration: none; color: var(--text);
+    }
+    .toc-item:hover { border-color: var(--primary); transform: translateX(4px); }
+    .toc-num { font-size: .8rem; font-weight: 900; color: var(--accent); min-width: 28px; }
+    .toc-text { font-size: .95rem; font-weight: 600; }
+
+    /* ── CHAPTER ── */
+    .chapter {
+      background: var(--bg-card); border-radius: 28px; padding: 64px;
+      border: 1px solid rgba(108,58,234,.15); margin-bottom: 40px;
+      position: relative; overflow: hidden;
+    }
+    .chapter::before {
+      content: '';
+      position: absolute; top: 0; left: 0;
+      width: 4px; height: 100%;
+      background: var(--gradient);
+    }
+    .chapter-num {
+      font-size: .75rem; font-weight: 900; letter-spacing: .12em; text-transform: uppercase;
+      color: var(--primary); margin-bottom: 12px;
+    }
+    .chapter h3 { font-size: clamp(1.4rem, 2.5vw, 2rem); font-weight: 900; margin-bottom: 24px; }
+    .chapter p { color: var(--text-muted); margin-bottom: 18px; }
+    .chapter strong { color: var(--text); }
+
+    /* ── CALLOUT ── */
+    .callout {
+      border-radius: 16px; padding: 24px 28px; margin: 28px 0;
+      display: flex; gap: 18px; align-items: flex-start;
+    }
+    .callout-tip { background: rgba(6,214,160,.1); border: 1px solid rgba(6,214,160,.3); }
+    .callout-warn { background: rgba(255,209,102,.1); border: 1px solid rgba(255,209,102,.3); }
+    .callout-info { background: rgba(0,210,255,.1); border: 1px solid rgba(0,210,255,.3); }
+    .callout-icon { font-size: 1.4rem; min-width: 32px; }
+    .callout p { margin: 0; font-size: .93rem; }
+    .callout strong { display: block; margin-bottom: 6px; font-size: 1rem; }
+
+    /* ── PROMPT BOX ── */
+    .prompt-box {
+      background: #0A0A18; border: 1px solid rgba(108,58,234,.4);
+      border-radius: 16px; padding: 24px 28px; margin: 24px 0;
+      position: relative; font-family: 'Courier New', monospace;
+    }
+    .prompt-box::before {
+      content: '📋 PROMPT';
+      position: absolute; top: -12px; left: 20px;
+      background: var(--primary); color: #fff; font-size: .7rem;
+      font-weight: 800; padding: 3px 12px; border-radius: 99px; font-family: sans-serif;
+      letter-spacing: .05em;
+    }
+    .prompt-box p { color: #B0C4DE; font-size: .9rem; margin: 0; line-height: 1.8; }
+    .prompt-box .prompt-label { color: var(--accent); font-weight: 700; font-family: sans-serif; font-size: .8rem; margin-bottom: 8px; }
+    .copy-btn {
+      position: absolute; top: 12px; right: 14px;
+      background: rgba(108,58,234,.3); border: none; color: var(--accent);
+      padding: 5px 12px; border-radius: 8px; font-size: .75rem; cursor: pointer;
+      transition: background .2s;
+    }
+    .copy-btn:hover { background: rgba(108,58,234,.6); }
+
+    /* ── TOOL CARDS ── */
+    .tools-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; margin-top: 32px; }
+    .tool-card {
+      background: var(--bg-card2); border: 1px solid rgba(255,255,255,.07);
+      border-radius: 20px; padding: 28px; transition: border-color .2s, transform .2s;
+    }
+    .tool-card:hover { border-color: var(--primary); transform: translateY(-4px); }
+    .tool-icon { font-size: 2rem; margin-bottom: 14px; }
+    .tool-name { font-size: 1.05rem; font-weight: 800; margin-bottom: 8px; }
+    .tool-desc { font-size: .88rem; color: var(--text-muted); margin-bottom: 14px; }
+    .tool-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+    .tag {
+      font-size: .72rem; font-weight: 700; padding: 3px 10px; border-radius: 99px;
+    }
+    .tag-free { background: rgba(6,214,160,.15); color: var(--green); border: 1px solid rgba(6,214,160,.3); }
+    .tag-paid { background: rgba(239,35,60,.1); color: var(--red); border: 1px solid rgba(239,35,60,.3); }
+    .tag-freemium { background: rgba(255,209,102,.1); color: var(--highlight); border: 1px solid rgba(255,209,102,.3); }
+
+    /* ── WORKFLOW ── */
+    .workflow { display: flex; flex-direction: column; gap: 0; margin: 32px 0; }
+    .workflow-step {
+      display: flex; gap: 24px; align-items: flex-start;
+      padding: 24px 0; border-bottom: 1px solid rgba(255,255,255,.06);
+    }
+    .workflow-step:last-child { border-bottom: none; }
+    .step-circle {
+      width: 44px; height: 44px; border-radius: 50%; min-width: 44px;
+      background: var(--gradient); display: flex; align-items: center; justify-content: center;
+      font-weight: 900; font-size: 1rem; color: #fff; box-shadow: 0 4px 20px rgba(108,58,234,.4);
+    }
+    .step-body h4 { font-size: 1.05rem; font-weight: 800; margin-bottom: 6px; }
+    .step-body p { font-size: .9rem; color: var(--text-muted); margin: 0; }
+
+    /* ── MISTAKE CARDS ── */
+    .mistakes-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; margin-top: 32px; }
+    .mistake-card {
+      background: var(--bg-card2); border-radius: 18px; padding: 28px;
+      border-left: 4px solid var(--red);
+    }
+    .mistake-card.good { border-left-color: var(--green); }
+    .mistake-label { font-size: .75rem; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; margin-bottom: 12px; }
+    .mistake-label.bad { color: var(--red); }
+    .mistake-label.good { color: var(--green); }
+    .mistake-card h4 { font-size: 1rem; font-weight: 800; margin-bottom: 8px; }
+    .mistake-card p { font-size: .88rem; color: var(--text-muted); margin: 0; }
+
+    /* ── BIG PROMPT LIBRARY ── */
+    .prompt-library { display: flex; flex-direction: column; gap: 14px; }
+    .prompt-cat { font-size: .8rem; font-weight: 900; text-transform: uppercase; letter-spacing: .1em; color: var(--accent); margin-top: 24px; margin-bottom: 4px; }
+
+    /* ── CHECKLIST ── */
+    .checklist { list-style: none; margin: 20px 0; }
+    .checklist li {
+      display: flex; gap: 14px; align-items: flex-start;
+      padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,.05);
+      font-size: .95rem;
+    }
+    .checklist li:last-child { border-bottom: none; }
+    .check-icon { color: var(--green); font-size: 1.1rem; min-width: 24px; }
+
+    /* ── QUOTE ── */
+    .blockquote {
+      border-left: 4px solid var(--primary); padding: 20px 28px; margin: 28px 0;
+      background: rgba(108,58,234,.08); border-radius: 0 16px 16px 0;
+      font-style: italic; font-size: 1.05rem; color: var(--text);
+    }
+    .blockquote cite { display: block; margin-top: 10px; font-size: .85rem; color: var(--text-muted); font-style: normal; }
+
+    /* ── COMPARISON TABLE ── */
+    .comparison-table { width: 100%; border-collapse: collapse; margin: 28px 0; font-size: .9rem; }
+    .comparison-table th {
+      background: rgba(108,58,234,.2); padding: 14px 18px; text-align: left;
+      font-weight: 800; border-bottom: 2px solid rgba(108,58,234,.3);
+    }
+    .comparison-table td { padding: 14px 18px; border-bottom: 1px solid rgba(255,255,255,.06); color: var(--text-muted); }
+    .comparison-table tr:hover td { background: rgba(255,255,255,.03); }
+    .comparison-table .yes { color: var(--green); font-weight: 700; }
+    .comparison-table .no { color: var(--red); }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center; padding: 64px 24px;
+      border-top: 1px solid rgba(255,255,255,.07);
+      color: var(--text-muted); font-size: .9rem;
+    }
+    footer a { color: var(--accent); text-decoration: none; }
+
+    /* ── PROGRESS BAR ── */
+    #progress-bar {
+      position: fixed; top: 0; left: 0; height: 3px;
+      background: var(--gradient); width: 0%; z-index: 200;
+      transition: width .1s;
+    }
+
+    /* ── SCROLLSPY DOTS ── */
+    .scrollspy {
+      position: fixed; right: 24px; top: 50%; transform: translateY(-50%);
+      display: flex; flex-direction: column; gap: 8px; z-index: 50;
+    }
+    .spy-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: rgba(255,255,255,.2); cursor: pointer; transition: background .2s, transform .2s;
+      border: none;
+    }
+    .spy-dot.active { background: var(--accent); transform: scale(1.5); }
+
+    /* ── BACK TO TOP ── */
+    #back-top {
+      position: fixed; bottom: 32px; right: 32px; z-index: 99;
+      background: var(--gradient); border: none; color: #fff;
+      width: 48px; height: 48px; border-radius: 50%; font-size: 1.2rem; cursor: pointer;
+      box-shadow: 0 8px 24px rgba(108,58,234,.4); opacity: 0; transition: opacity .3s;
+    }
+    #back-top.visible { opacity: 1; }
+
+    @media (max-width: 700px) {
+      .chapter { padding: 32px 24px; }
+      nav { padding: 12px 16px; }
+      .nav-links { display: none; }
+      .scrollspy { display: none; }
+      .hero-stats { gap: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="progress-bar"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">🤖 AI Sans Jargon</div>
+  <div class="nav-links">
+    <a href="#intro">Intro</a>
+    <a href="#comprendre">Comprendre</a>
+    <a href="#outils">Outils</a>
+    <a href="#prompts">Prompts</a>
+    <a href="#workflows">Workflows</a>
+    <a href="#erreurs">Erreurs</a>
+  </div>
+  <div class="nav-badge">Édition 2025</div>
+</nav>
+
+<!-- SCROLLSPY -->
+<div class="scrollspy" id="spy">
+  <button class="spy-dot active" data-target="hero"></button>
+  <button class="spy-dot" data-target="toc"></button>
+  <button class="spy-dot" data-target="intro"></button>
+  <button class="spy-dot" data-target="comprendre"></button>
+  <button class="spy-dot" data-target="outils"></button>
+  <button class="spy-dot" data-target="prompts"></button>
+  <button class="spy-dot" data-target="workflows"></button>
+  <button class="spy-dot" data-target="erreurs"></button>
+  <button class="spy-dot" data-target="plan-action"></button>
+</div>
+
+<!-- HERO -->
+<div class="hero" id="hero">
+  <div class="hero-content">
+    <div class="hero-badge">📘 Guide Complet — Mis à jour 2025</div>
+    <h1>
+      <span>L'Intelligence Artificielle</span><br>
+      sans jargon : automatise<br>ton travail sans coder
+    </h1>
+    <p>Le guide pratique pour professionnels non-techniques qui veulent utiliser l'IA dès aujourd'hui — avec des prompts prêts à l'emploi, des outils concrets et des workflows testés.</p>
+    <div class="hero-cta">
+      <a href="#intro" class="btn-primary">📖 Commencer à lire</a>
+      <a href="#prompts" class="btn-outline">⚡ Aller aux prompts</a>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat"><strong>40+</strong><span>Prompts prêts à l'emploi</span></div>
+      <div class="hero-stat"><strong>15+</strong><span>Outils passés en revue</span></div>
+      <div class="hero-stat"><strong>8</strong><span>Workflows complets</span></div>
+      <div class="hero-stat"><strong>0€</strong><span>Pour démarrer</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- TABLE OF CONTENTS -->
+<section id="toc" style="padding-top:60px;">
+  <div class="section-label">📋 Contenu</div>
+  <h2>Ce que tu vas <span>apprendre</span></h2>
+  <p class="subtitle">Un guide structuré du plus simple au plus avancé. Peu importe ton niveau, tu trouveras de la valeur à chaque chapitre.</p>
+  <div class="toc-grid">
+    <a href="#intro" class="toc-item"><span class="toc-num">01</span><span class="toc-text">Pourquoi l'IA change tout (même pour toi)</span></a>
+    <a href="#comprendre" class="toc-item"><span class="toc-num">02</span><span class="toc-text">Comprendre l'IA sans se prendre la tête</span></a>
+    <a href="#outils" class="toc-item"><span class="toc-num">03</span><span class="toc-text">Les meilleurs outils IA en 2025</span></a>
+    <a href="#prompts" class="toc-item"><span class="toc-num">04</span><span class="toc-text">40+ Prompts professionnels prêts à l'emploi</span></a>
+    <a href="#workflows" class="toc-item"><span class="toc-num">05</span><span class="toc-text">Workflows IA complets par métier</span></a>
+    <a href="#erreurs" class="toc-item"><span class="toc-num">06</span><span class="toc-text">Les 7 erreurs classiques (et comment les éviter)</span></a>
+    <a href="#plan-action" class="toc-item"><span class="toc-num">07</span><span class="toc-text">Ton plan d'action sur 30 jours</span></a>
+  </div>
+</section>
+
+<!-- CHAPTER 1 : INTRODUCTION -->
+<section id="intro">
+  <div class="chapter">
+    <div class="chapter-num">Chapitre 01</div>
+    <h3>Pourquoi l'IA change tout — même si tu n'es pas développeur</h3>
+
+    <p>Laisse-moi te poser une question directe : est-ce que tu as déjà eu l'impression que ton travail consomme plus d'heures que ce qu'il ne devrait ? Que tu répètes les mêmes tâches encore et encore — écrire des emails similaires, reformuler des comptes-rendus, chercher des informations qui se trouvent quelque part dans tes fichiers ?</p>
+
+    <p>Tu n'es pas seul. Et l'intelligence artificielle est, littéralement, la réponse à ce problème.</p>
+
+    <div class="blockquote">
+      "Les professionnels qui adoptent l'IA aujourd'hui ne remplacent pas leur travail. Ils se libèrent des tâches répétitives pour se concentrer sur ce qui les rend vraiment irremplaçables."
+      <cite>— Mckinsey Global Institute, Rapport sur l'avenir du travail, 2024</cite>
+    </div>
+
+    <p><strong>Mais voici le problème :</strong> la plupart des guides sur l'IA sont écrits pour des développeurs ou des profils techniques. Ils te parlent de "modèles de langage", de "tokens" et de "fine-tuning". Résultat : tu fermes l'onglet, tu retournes à tes habitudes, et l'IA reste un concept flou que tu utilises peut-être pour une blague ou un fond d'écran.</p>
+
+    <p>Ce guide existe pour changer ça.</p>
+
+    <div class="callout callout-info">
+      <div class="callout-icon">📊</div>
+      <div>
+        <strong>Ce que disent les chiffres</strong>
+        <p>Selon une étude d'Harvard Business School (2023), les travailleurs qui utilisent l'IA dans leurs tâches quotidiennes sont <strong>37 % plus productifs</strong> sur les tâches d'analyse et de rédaction. Ce gain ne nécessite aucune compétence technique — juste les bons outils et les bonnes méthodes.</p>
+      </div>
+    </div>
+
+    <h4 style="margin: 28px 0 14px; font-size: 1.2rem;">Ce que l'IA peut faire pour toi, concrètement</h4>
+    <ul class="checklist">
+      <li><span class="check-icon">✅</span><span>Rédiger des emails professionnels, des comptes-rendus, des rapports en quelques secondes</span></li>
+      <li><span class="check-icon">✅</span><span>Synthétiser des documents longs (PDF, articles, transcriptions) en points clés</span></li>
+      <li><span class="check-icon">✅</span><span>Préparer des présentations structurées à partir de simples notes</span></li>
+      <li><span class="check-icon">✅</span><span>Répondre à des questions complexes sur ton secteur ou tes données</span></li>
+      <li><span class="check-icon">✅</span><span>Automatiser des tâches répétitives sans écrire une seule ligne de code</span></li>
+      <li><span class="check-icon">✅</span><span>Générer des idées créatives, du brainstorming, des angles nouveaux</span></li>
+      <li><span class="check-icon">✅</span><span>Transcire et résumer des réunions automatiquement</span></li>
+    </ul>
+
+    <div class="callout callout-tip">
+      <div class="callout-icon">💡</div>
+      <div>
+        <strong>Ce que l'IA ne peut PAS faire</strong>
+        <p>L'IA ne te remplacera pas si tu utilises ton jugement et ton expertise humaine. Elle peut se tromper (on appelle ça des "hallucinations"), elle ne connaît pas le contexte de ta boîte ou de tes relations clients, et elle ne prend pas de décisions stratégiques à ta place. Elle est un outil, pas un employé.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CHAPTER 2 : COMPRENDRE -->
+<section id="comprendre">
+  <div class="chapter">
+    <div class="chapter-num">Chapitre 02</div>
+    <h3>Comprendre l'IA en 10 minutes — sans te noyer dans le jargon</h3>
+
+    <p>Pas besoin d'un master en informatique pour comprendre comment fonctionne l'IA. Voici une explication simple, honnête, et qui va t'être utile pour utiliser ces outils efficacement.</p>
+
+    <h4 style="margin: 28px 0 14px; font-size: 1.2rem;">🧠 C'est quoi un LLM, exactement ?</h4>
+    <p>Un <strong>LLM (Large Language Model)</strong> — soit un "grand modèle de langage" — est le cerveau derrière des outils comme ChatGPT, Claude ou Gemini. En résumé ultra-simplifié : ces modèles ont été entraînés sur des milliards de textes (livres, articles, sites web, code...). Grâce à cet entraînement, ils ont appris à prédire le "prochain mot le plus probable" de manière tellement performante qu'ils semblent comprendre le langage humain.</p>
+
+    <div class="callout callout-warn">
+      <div class="callout-icon">⚠️</div>
+      <div>
+        <strong>Un point important à retenir</strong>
+        <p>Ces modèles ne "savent" pas au sens humain du terme. Ils ne pensent pas. Ils génèrent des réponses statistiquement cohérentes. C'est pour ça qu'ils peuvent parfois produire des réponses fausses mais qui "sonnent" très vraies. C'est pourquoi <strong>tu dois toujours vérifier les informations importantes</strong> qu'ils produisent.</p>
+      </div>
+    </div>
+
+    <h4 style="margin: 28px 0 14px; font-size: 1.2rem;">📖 Le lexique essentiel</h4>
+
+    <table class="comparison-table">
+      <thead>
+        <tr><th>Terme</th><th>Ce que ça veut dire en vrai</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Prompt</strong></td><td>L'instruction ou la question que tu poses à l'IA. C'est ton "message".</td></tr>
+        <tr><td><strong>Token</strong></td><td>Une petite unité de texte (environ ¾ d'un mot). Utilisé pour mesurer la taille des messages.</td></tr>
+        <tr><td><strong>Hallucination</strong></td><td>Quand l'IA invente une réponse fausse avec confiance. Cela arrive, surtout sur des faits précis.</td></tr>
+        <tr><td><strong>Contexte</strong></td><td>Tout ce que tu as dit dans la conversation. L'IA s'en souvient pour tes réponses suivantes.</td></tr>
+        <tr><td><strong>Température</strong></td><td>Le niveau de "créativité" de l'IA (quand tu peux le régler). Haute = plus créatif, basse = plus factuel.</td></tr>
+        <tr><td><strong>API</strong></td><td>Une façon pour les développeurs d'intégrer l'IA dans leurs propres outils. Tu n'en as pas besoin si tu utilises des interfaces comme ChatGPT.</td></tr>
+        <tr><td><strong>RAG</strong></td><td>Une technique qui permet à l'IA d'accéder à tes propres documents pour répondre à des questions sur eux.</td></tr>
+      </tbody>
+    </table>
+
+    <h4 style="margin: 28px 0 14px; font-size: 1.2rem;">⚖️ Les 3 grands acteurs à connaître</h4>
+
+    <div class="tools-grid">
+      <div class="tool-card">
+        <div class="tool-icon">💬</div>
+        <div class="tool-name">ChatGPT (OpenAI)</div>
+        <div class="tool-desc">Le plus connu. Très polyvalent, supporte les plugins, dispose d'une version gratuite (GPT-3.5) et payante (GPT-4o). Excellent pour la rédaction, l'analyse, et le code.</div>
+        <div class="tool-tags"><span class="tag tag-freemium">Freemium</span></div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-icon">🤖</div>
+        <div class="tool-name">Claude (Anthropic)</div>
+        <div class="tool-desc">Réputé pour sa capacité à traiter de très longs documents, son ton naturel, et sa prudence. Excellent pour analyser des PDF, rédiger de longs contenus, et les tâches nuancées.</div>
+        <div class="tool-tags"><span class="tag tag-freemium">Freemium</span></div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-icon">✨</div>
+        <div class="tool-name">Gemini (Google)</div>
+        <div class="tool-desc">Intégré aux produits Google (Docs, Gmail, Meet). Idéal si tu utilises déjà Google Workspace. Peut accéder à internet en temps réel pour des informations actualisées.</div>
+        <div class="tool-tags"><span class="tag tag-freemium">Freemium</span></div>
+      </div>
+    </div>
+
+    <div class="callout callout-tip">
+      <div class="callout-icon">💡</div>
+      <div>
+        <strong>Conseil de départ</strong>
+        <p>Si tu débutes complètement, commence avec <strong>ChatGPT (version gratuite)</strong> ou <strong>Claude.ai (version gratuite)</strong>. Ce sont les interfaces les plus accessibles pour apprendre sans investissement. Tu peux toujours passer au payant quand tu vois la valeur que ça t'apporte.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CHAPTER 3 : OUTILS -->
+<section id="outils">
+  <div class="chapter">
+    <div class="chapter-num">Chapitre 03</div>
+    <h3>Les meilleurs outils IA en 2025 — par catégorie, avec prix réels</h3>
+    <p>Voici une sélection rigoureuse des outils qui ont prouvé leur valeur. Pour chaque catégorie, tu trouveras une option gratuite ou accessible à un budget serré.</p>
+
+    <div class="prompt-cat">✍️ RÉDACTION & CONTENU</div>
+    <div class="tools-grid">
+      <div class="tool-card">
+        <div class="tool-icon">💬</div>
+        <div class="tool-name">ChatGPT</div>
+        <div class="tool-desc">Rédaction universelle : emails, articles, posts, scripts. La version GPT-4o inclut la vision (analyse d'images) et la navigation web.</div>
+        <div class="tool-tags"><span class="tag tag-free">Gratuit</span><span class="tag tag-paid">Plus : 22€/mois</span></div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-icon">✒️</div>
+        <div class="tool-name">Grammarly</div>
+        <div class="tool-desc">Correcteur IA pour l'anglais. Analyse la grammaire, le style, le ton. S'intègre à Gmail, Word, LinkedIn. Indispensable si tu travailles en anglais.</div>
+        <div class="tool-tags"><span class="tag tag-freemium">Freemium</span><span class="tag tag-paid">Pro : ~12€/mois</span></div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-icon">📝</div>
+        <div class="tool-name">Notion AI</div>
+        <div class="tool-desc">IA intégrée dans Notion. Génère des résumés, améliore tes notes, crée des to-do lists et des bases de connaissances intelligentes.</div>
+        <div class="tool-tags"><span class="tag tag-paid">+10€/mois sur ton plan</span></div>
+      </div>
+    </div>
+
+    <div class="prompt-cat">🎙️ RÉUNIONS & TRANSCRIPTION</div>
+    <div class="tools-grid">
+      <div class="tool-card">
+        <div class="tool-icon">🎤</div>
+        <div class="tool-name">Otter.ai</div>
+        <div class="tool-desc">Transcrit et résume tes réunions en temps réel. Rejoint automatiquement Zoom, Meet et Teams. Identifie les speakers et crée des comptes-rendus.</div>
+        <div class="tool-tags"><span class="tag tag-free">Gratuit (300 min/mois)</span><span class="tag tag-paid">Pro : 10$/mois</span></div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-icon">🤫</div>
+        <div class="tool-name">Krisp</div>
+        <div class="tool-desc">Supprime le bruit de fond en temps réel + transcription des réunions. Très discret, fonctionne avec tous les outils de visio. Idéal en open-space.</div>
+        <div class="tool-tags"><span class="tag tag-free">Gratuit (60 min/sem)</span><span class="tag tag-paid">Pro : 8$/mois</span></div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-icon">🤖</div>
+        <div class="tool-name">Jamie</div>
+        <div class="tool-desc">Résumés de réunions sans bot intrusif dans la salle. Enregistre directement depuis ton ordinateur (micro + haut-parleur). Notes très naturelles et lisibles.</div>
+        <div class="tool-tags"><span class="tag tag-freemium">Freemium</span></div>
+      </div>
+    </div>
+
+    <div class="prompt-cat">⚙️ AUTOMATISATION</div>
+    <div class="tools-grid">
+      <div class="tool-card">
+        <div class="tool-icon">⚡</div>
+        <div class="tool-name">Zapier</div>
+        <div class="tool-desc">Connecte 8 000+ applications entre elles. Crée des automatisations (Zaps) sans coder. Ex : "quand un lead remplit un formulaire → crée une tâche dans Notion → envoie un email de bienvenue".</div>
+        <div class="tool-tags"><span class="tag tag-free">Gratuit (Zaps simples)</span><span class="tag tag-paid">Starter : 20€/mois</span></div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-icon">🔗</div>
+        <div class="tool-name">Make (ex-Integromat)</div>
+        <div class="tool-desc">Alternative à Zapier, souvent moins cher et plus visuel. Permet des workflows complexes avec branchements conditionnels. Interface drag-and-drop.</div>
+        <div class="tool-tags"><span class="tag tag-free">Gratuit (1000 ops/mois)</span><span class="tag tag-paid">Core : 9€/mois</span></div>
+      </div>
+    </div>
+
+    <div class="prompt-cat">🎨 VISUELS & PRÉSENTATIONS</div>
+    <div class="tools-grid">
+      <div class="tool-card">
+        <div class="tool-icon">🎨</div>
+        <div class="tool-name">Canva AI</div>
+        <div class="tool-desc">Génère des présentations, visuels, et posts réseaux sociaux via des prompts. Inclut "Magic Write" pour le texte et "Magic Design" pour les layouts automatiques.</div>
+        <div class="tool-tags"><span class="tag tag-free">Gratuit</span><span class="tag tag-paid">Pro : 13€/mois</span></div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-icon">📊</div>
+        <div class="tool-name">Gamma</div>
+        <div class="tool-desc">Crée des présentations complètes à partir d'un simple prompt ou d'un texte. Résultat professionnel en 30 secondes. Excellent pour les pitches et les rapports.</div>
+        <div class="tool-tags"><span class="tag tag-free">Gratuit (watermark)</span><span class="tag tag-paid">Pro : 10$/mois</span></div>
+      </div>
+    </div>
+
+    <div class="prompt-cat">🔍 RECHERCHE & ANALYSE</div>
+    <div class="tools-grid">
+      <div class="tool-card">
+        <div class="tool-icon">🔍</div>
+        <div class="tool-name">Perplexity AI</div>
+        <div class="tool-desc">Moteur de recherche IA qui cite ses sources. Répond à des questions complexes avec des références vérifiables. Remplace avantageusement une recherche Google classique.</div>
+        <div class="tool-tags"><span class="tag tag-free">Gratuit</span><span class="tag tag-paid">Pro : 20$/mois</span></div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-icon">📊</div>
+        <div class="tool-name">Julius AI</div>
+        <div class="tool-desc">Analyse des données et spreadsheets via des prompts simples. Upload un CSV ou Excel, pose des questions en français, obtiens des graphiques et des insights.</div>
+        <div class="tool-tags"><span class="tag tag-freemium">Essai gratuit</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CHAPTER 4 : PROMPTS -->
+<section id="prompts">
+  <div class="chapter">
+    <div class="chapter-num">Chapitre 04</div>
+    <h3>La bibliothèque : 40+ prompts professionnels prêts à l'emploi</h3>
+
+    <div class="callout callout-info">
+      <div class="callout-icon">📌</div>
+      <div>
+        <strong>Comment lire ces prompts</strong>
+        <p>Les éléments entre <strong>[crochets]</strong> sont à remplacer par tes propres informations. Ces prompts fonctionnent avec ChatGPT, Claude ou Gemini. Copie, colle, adapte et envoie.</p>
+      </div>
+    </div>
+
+    <h4 style="margin: 32px 0 14px; font-size: 1.2rem; color: var(--accent);">📧 Emails & Communication</h4>
+    <div class="prompt-library">
+
+      <div class="prompt-box">
+        <button class="copy-btn" onclick="copyPrompt(this)">Copier</button>
+        <div class="prompt-label">EMAIL DE SUIVI CLIENT</div>
+        <p>Rédige un email de suivi professionnel et chaleureux pour [prénom du client]. Nous avons eu un appel le [date] concernant [sujet de la discussion]. L'objectif de cet email est de [récapituler les points clés / fixer la prochaine étape / partager les informations demandées]. Le ton doit être [formel / amical / direct]. Limite à 150 mots.</p>
+      </div>
+
+      <div class="prompt-box">
+        <button class="copy-btn" onclick="copyPrompt(this)">Copier</button>
+        <div class="prompt-label">RÉPONSE À UN EMAIL DIFFICILE</div>
+        <p>Je dois répondre à cet email délicat : "[colle l'email en question ici]". Rédige 3 versions de réponse avec des tons différents : 1) Ferme et professionnel, 2) Empathique et conciliant, 3) Direct et factuel. Je choisirai celle qui convient le mieux.</p>
+      </div>
+
+      <div class="prompt-box">
+        <button class="copy-btn" onclick="copyPrompt(this)">Copier</button>
+        <div class="prompt-label">EMAIL DE PROSPECTION</div>
+        <p>Écris un cold email de prospection B2B pour contacter [type de prospect : ex. "responsable RH d'une PME de 50 personnes"]. Mon entreprise propose [ton service/produit en 1 phrase]. Le message doit : éviter les formules génériques, personnaliser avec un angle sur [problème ou actualité du prospect], inclure un appel à l'action clair. Maximum 120 mots.</p>
+      </div>
+
+      <div class="prompt-box">
+        <button class="copy-btn" onclick="copyPrompt(this)">Copier</button>
+        <div class="prompt-label">RÉSUMÉ DE FIL EMAIL</div>
+        <p>Voici un fil de discussion par email entre plusieurs personnes : [colle le fil email ici]. Résume-le en : 1) Contexte en 2 phrases, 2) Les décisions prises, 3) Les actions à faire et qui en est responsable, 4) Les points non résolus qui nécessitent une réponse.</p>
+      </div>
+    </div>
+
+    <h4 style="margin: 36px 0 14px; font-size: 1.2rem; color: var(--accent);">📄 Documents & Rapports</h4>
+    <div class="prompt-library">
+
+      <div class="prompt-box">
+        <button class="copy-btn" onclick="copyPrompt(this)">Copier</button>
+        <div class="prompt-label">COMPTE-RENDU DE RÉUNION</div>
+        <p>Transforme ces notes brutes de réunion en compte-rendu professionnel : "[colle tes notes ici]". Le compte-rendu doit inclure : date et participants, objectifs de la réunion, résumé des échanges par thème, décisions prises, actions à mener (avec responsable et deadline si mentionné), prochaines étapes. Format clair et lisible.</p>
+      </div>
+
+      <div class="prompt-box">
+        <button class="copy-btn" onclick="copyPrompt(this)">Copier</button>
+        <div class="prompt-label">RÉSUMÉ DE DOCUMENT LONG</div>
+        <p>Voici un document / article / rapport : [colle ou décris le contenu]. Résume-le en : 1) L'idée principale en 3 phrases, 2) Les 5 points clés à retenir, 3) Ce que cela implique concrètement pour [ton contexte / ton secteur]. Utilise un langage simple et direct.</p>
+      </div>
+
+      <div class="prompt-box">
+        <button class="copy-btn" onclick="copyPrompt(this)">Copier</button>
+        <div class="prompt-label">RÉDACTION D'UN RAPPORT</div>
+        <p>Aide-moi à rédiger un rapport professionnel sur [sujet]. Le rapport est destiné à [audience : ex. "direction générale", "clients", "équipe technique"]. Les informations clés à inclure sont : [liste tes points]. Le format souhaité : introduction, corps structuré avec sous-titres, conclusion avec recommandations. Longueur visée : [X pages/mots].</p>
+      </div>
+
+      <div class="prompt-box">
+        <button class="copy-btn" onclick="copyPrompt(this)">Copier</button>
+        <div class="prompt-label">STRUCTURE DE PRÉSENTATION</div>
+        <p>Crée la structure détaillée d'une présentation de [X slides] sur [sujet]. L'audience est [qui écoute], l'objectif est [ce que tu veux qu'ils fassent ou pensent après]. Pour chaque slide, indique : titre, message principal, 2-3 points à couvrir, type de visuel recommandé (graphique, image, liste, etc.).</p>
+      </div>
+    </div>
+
+    <h4 style="margin: 36px 0 14px; font-size: 1.2rem; color: var(--accent);">💡 Brainstorming & Stratégie</h4>
+    <div class="prompt-library">
+
+      <div class="prompt-box">
+        <button class="copy-btn" onclick="copyPrompt(this)">Copier</button>
+        <div class="prompt-label">BRAINSTORMING D'IDÉES</div>
+        <p>Génère 15 idées originales pour [sujet / problème / projet]. Pour chaque idée, donne : 1) Le concept en 1 phrase, 2) Un mini-argument pour et un argument contre. Sois créatif et inclus 2-3 idées "hors des sentiers battus" que je n'aurais probablement pas envisagées seul.</p>
+      </div>
+
+      <div class="prompt-box">
+        <button class="copy-btn" onclick="copyPrompt(this)">Copier</button>
+        <div class="prompt-label">ANALYSE SWOT RAPIDE</div>
+        <p>Fais une analyse SWOT de [mon projet / produit / décision] en te basant sur les informations suivantes : [contexte]. Présente-la clairement avec : Forces (internes), Faiblesses (internes), Opportunités (externes), Menaces (externes). Pour chaque catégorie, donne 3 à 5 points concrets et actionnables.</p>
+      </div>
+
+      <div class="prompt-box">
+        <button class="copy-btn" onclick="copyPrompt(this)">Copier</button>
+        <div class="prompt-label">PLAN D'ACTION</div>
+        <p>Je dois atteindre cet objectif : [objectif précis] d'ici [délai]. Je dispose de : [ressources disponibles]. Les contraintes sont : [contraintes]. Crée un plan d'action semaine par semaine avec des étapes concrètes, mesurables et réalistes. Indique les dépendances entre les tâches si nécessaire.</p>
+      </div>
+    </div>
+
+    <h4 style="margin: 36px 0 14px; font-size: 1.2rem; color: var(--accent);">📱 Réseaux Sociaux & Marketing</h4>
+    <div class="prompt-library">
+
+      <div class="prompt-box">
+        <button class="copy-btn" onclick="copyPrompt(this)">Copier</button>
+        <div class="prompt-label">POST LINKEDIN</div>
+        <p>Rédige un post LinkedIn percutant sur [sujet / enseignement / histoire]. Le post doit : accrocher dès la première ligne (sans "Je suis fier d'annoncer"), raconter une histoire courte ou partager une insight utile, inclure un message principal clair, se terminer par une question pour engager les commentaires. Longueur : 150-250 mots. Ton : [professionnel / authentique / direct].</p>
+      </div>
+
+      <div class="prompt-box">
+        <button class="copy-btn" onclick="copyPrompt(this)">Copier</button>
+        <div class="prompt-label">CALENDRIER CONTENU</div>
+        <p>Crée un calendrier éditorial de 4 semaines pour [ma page LinkedIn / mon compte Instagram / mon blog] dans le secteur [ton secteur]. L'audience cible est [description]. Pour chaque post, indique : le thème, l'angle narratif, le type de contenu (texte, carrousel, vidéo, etc.), et le meilleur jour/heure de publication.</p>
+      </div>
+
+      <div class="prompt-box">
+        <button class="copy-btn" onclick="copyPrompt(this)">Copier</button>
+        <div class="prompt-label">TRANSFORMER UN ARTICLE EN PLUSIEURS FORMATS</div>
+        <p>À partir de ce texte ou article : [colle le contenu], génère les formats suivants : 1) Un résumé Twitter/X en 280 caractères, 2) Un post LinkedIn de 200 mots, 3) 5 points clés pour une newsletter, 4) Un angle "question-réponse" pour une FAQ, 5) Une idée de courte vidéo de 60 secondes (avec script).</p>
+      </div>
+    </div>
+
+    <h4 style="margin: 36px 0 14px; font-size: 1.2rem; color: var(--accent);">💼 RH, Recrutement & Management</h4>
+    <div class="prompt-library">
+
+      <div class="prompt-box">
+        <button class="copy-btn" onclick="copyPrompt(this)">Copier</button>
+        <div class="prompt-label">FICHE DE POSTE</div>
+        <p>Rédige une fiche de poste attractive pour le rôle de [titre du poste] dans une entreprise de [type d'entreprise / secteur]. Les missions principales sont : [liste]. Les compétences requises sont : [liste]. Évite le jargon corporatif habituel, mets en avant la culture de l'entreprise et les opportunités de croissance. Inclus une section "Ce que nous t'offrons".</p>
+      </div>
+
+      <div class="prompt-box">
+        <button class="copy-btn" onclick="copyPrompt(this)">Copier</button>
+        <div class="prompt-label">PRÉPARER UN ENTRETIEN</div>
+        <p>Je passe un entretien pour le poste de [intitulé du poste] dans [type d'entreprise]. Génère : 1) Les 10 questions les plus probables pour ce poste, 2) Les questions sur mes soft skills que je dois anticiper, 3) Les 5 questions que JE devrais poser à l'interviewer, 4) Les points à ne pas oublier de mettre en avant.</p>
+      </div>
+
+      <div class="prompt-box">
+        <button class="copy-btn" onclick="copyPrompt(this)">Copier</button>
+        <div class="prompt-label">FEEDBACK CONSTRUCTIF</div>
+        <p>Aide-moi à formuler un feedback constructif pour [prénom] qui travaille sur [poste/mission]. Le comportement ou résultat à améliorer est : [situation concrète]. Je veux que le feedback soit : honnête mais bienveillant, axé sur le comportement (pas la personne), avec des suggestions concrètes d'amélioration, et qui maintient la motivation.</p>
+      </div>
+    </div>
+
+    <h4 style="margin: 36px 0 14px; font-size: 1.2rem; color: var(--accent);">📊 Analyse & Données</h4>
+    <div class="prompt-library">
+
+      <div class="prompt-box">
+        <button class="copy-btn" onclick="copyPrompt(this)">Copier</button>
+        <div class="prompt-label">ANALYSER DES DONNÉES</div>
+        <p>Voici des données / résultats / chiffres : [colle tes données]. Analyse-les et dis-moi : 1) Les tendances principales, 2) Les anomalies ou points surprenants, 3) Ce que ces données révèlent sur [contexte], 4) 3 hypothèses pour expliquer les résultats, 5) Les prochaines questions à investiguer.</p>
+      </div>
+
+      <div class="prompt-box">
+        <button class="copy-btn" onclick="copyPrompt(this)">Copier</button>
+        <div class="prompt-label">INTERPRÉTATION DE RÉSULTATS</div>
+        <p>Je travaille dans [ton secteur]. Voici mes résultats [mensuels / trimestriels / annuels] : [données]. Interprète ces résultats en comparant avec ce qui est standard dans mon secteur. Identifie les points positifs, les points d'alerte, et propose 3 pistes d'action concrètes pour améliorer les résultats.</p>
+      </div>
+    </div>
+
+    <h4 style="margin: 36px 0 14px; font-size: 1.2rem; color: var(--accent);">🎓 Formation & Apprentissage</h4>
+    <div class="prompt-library">
+
+      <div class="prompt-box">
+        <button class="copy-btn" onclick="copyPrompt(this)">Copier</button>
+        <div class="prompt-label">APPRENDRE UN SUJET RAPIDEMENT</div>
+        <p>Je veux comprendre [sujet ou concept] en partant de zéro. Explique-le moi comme si j'avais 12 ans d'abord, puis approfondis progressivement. Inclus : une analogie du quotidien pour comprendre l'essentiel, les 5 concepts clés à maîtriser, les ressources gratuites pour aller plus loin, et les erreurs de compréhension les plus fréquentes.</p>
+      </div>
+
+      <div class="prompt-box">
+        <button class="copy-btn" onclick="copyPrompt(this)">Copier</button>
+        <div class="prompt-label">CRÉER UN QUIZ / AUTO-ÉVALUATION</div>
+        <p>Je viens d'apprendre / lire [sujet ou contenu]. Crée 10 questions à choix multiples pour tester ma compréhension. Pour chaque question : 4 options de réponse (dont une seule correcte), la réponse correcte indiquée, une explication courte de pourquoi c'est la bonne réponse.</p>
+      </div>
+    </div>
+
+    <div class="callout callout-tip">
+      <div class="callout-icon">⚡</div>
+      <div>
+        <strong>Le méta-prompt que tout le monde devrait connaître</strong>
+        <p>Si tu n'es jamais satisfait d'une réponse, ajoute ces instructions à la fin de n'importe quel prompt : <em>"Avant de répondre, résume ce que tu as compris de ma demande. Si tu penses que j'ai mal formulé quelque chose, dis-le-moi. Puis réponds de manière structurée, claire, et actionnable."</em> Cette simple addition améliore la qualité des réponses de façon spectaculaire.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CHAPTER 5 : WORKFLOWS -->
+<section id="workflows">
+  <div class="chapter">
+    <div class="chapter-num">Chapitre 05</div>
+    <h3>8 workflows IA complets — à copier selon ton métier</h3>
+
+    <p>Un "workflow" (ou flux de travail), c'est une séquence d'étapes où l'IA t'assiste du début à la fin d'une tâche. Voici 8 workflows complets et testés.</p>
+
+    <div class="callout callout-info">
+      <div class="callout-icon">🔄</div>
+      <div>
+        <strong>Comment utiliser ces workflows</strong>
+        <p>Chaque workflow est une séquence d'étapes. Tu n'as pas besoin de tout automatiser dès le départ : commence par utiliser l'IA sur une seule étape, puis élargis au fur et à mesure que tu prends de l'aisance.</p>
+      </div>
+    </div>
+
+    <h4 style="margin: 32px 0 18px; font-size: 1.2rem;">🗓️ Workflow 1 — Préparer une réunion client (15 min → 3 min)</h4>
+    <div class="workflow">
+      <div class="workflow-step">
+        <div class="step-circle">1</div>
+        <div class="step-body">
+          <h4>Recherche & contexte (Perplexity AI)</h4>
+          <p>Prompt : "Donne-moi les dernières actualités sur [entreprise client] et le contexte de [leur secteur d'activité]. Quels sont leurs enjeux actuels ?"</p>
+        </div>
+      </div>
+      <div class="workflow-step">
+        <div class="step-circle">2</div>
+        <div class="step-body">
+          <h4>Préparer les questions (ChatGPT / Claude)</h4>
+          <p>Prompt : "Je rencontre [profil du client] pour [objectif de la réunion]. Génère 8 questions ouvertes pour comprendre leurs besoins et créer un dialogue productif."</p>
+        </div>
+      </div>
+      <div class="workflow-step">
+        <div class="step-circle">3</div>
+        <div class="step-body">
+          <h4>Structurer l'ordre du jour</h4>
+          <p>Prompt : "Crée un agenda de réunion de [durée] pour discuter de [sujets]. Inclus les durées pour chaque point et laisse 10 minutes pour les questions."</p>
+        </div>
+      </div>
+      <div class="workflow-step">
+        <div class="step-circle">4</div>
+        <div class="step-body">
+          <h4>Après la réunion : compte-rendu (Otter.ai + ChatGPT)</h4>
+          <p>Enregistre la réunion avec Otter.ai (ou prends des notes), puis colle la transcription dans ChatGPT avec le prompt compte-rendu du chapitre précédent.</p>
+        </div>
+      </div>
+    </div>
+
+    <h4 style="margin: 40px 0 18px; font-size: 1.2rem;">📧 Workflow 2 — Gérer ta boîte mail efficacement (2h → 20 min)</h4>
+    <div class="workflow">
+      <div class="workflow-step">
+        <div class="step-circle">1</div>
+        <div class="step-body">
+          <h4>Trier et prioriser</h4>
+          <p>Colle les objets de tes emails non lus et demande à l'IA : "Voici ma liste d'emails. Classe-les par priorité (urgent/important/à déléguer/à supprimer) et explique pourquoi."</p>
+        </div>
+      </div>
+      <div class="workflow-step">
+        <div class="step-circle">2</div>
+        <div class="step-body">
+          <h4>Rédiger les réponses</h4>
+          <p>Pour chaque email important, colle-le dans l'IA avec le contexte et le prompt email adapté. Obtiens un brouillon en 10 secondes que tu n'as plus qu'à ajuster.</p>
+        </div>
+      </div>
+      <div class="workflow-step">
+        <div class="step-circle">3</div>
+        <div class="step-body">
+          <h4>Créer des modèles réutilisables</h4>
+          <p>Demande à l'IA de créer des templates pour tes réponses les plus fréquentes. Stocke-les dans Notion ou un document texte pour les réutiliser.</p>
+        </div>
+      </div>
+    </div>
+
+    <h4 style="margin: 40px 0 18px; font-size: 1.2rem;">📝 Workflow 3 — Créer du contenu LinkedIn en masse (3h/semaine → 45 min)</h4>
+    <div class="workflow">
+      <div class="workflow-step">
+        <div class="step-circle">1</div>
+        <div class="step-body">
+          <h4>Générer des idées de posts (30 min/mois)</h4>
+          <p>Prompt : "Je travaille dans [secteur]. Génère 20 idées de posts LinkedIn originaux que mon audience de [description] aimerait lire. Mix de posts inspirants, éducatifs et de prises de position."</p>
+        </div>
+      </div>
+      <div class="workflow-step">
+        <div class="step-circle">2</div>
+        <div class="step-body">
+          <h4>Rédiger les posts en batch</h4>
+          <p>Réserve 45 minutes une fois par semaine. Ouvre ChatGPT, choisis 5 idées et utilise le prompt LinkedIn du chapitre précédent pour rédiger les 5 en une seule session.</p>
+        </div>
+      </div>
+      <div class="workflow-step">
+        <div class="step-circle">3</div>
+        <div class="step-body">
+          <h4>Planifier avec un outil de scheduling</h4>
+          <p>Utilise Buffer ou LinkedIn lui-même pour planifier les posts à l'avance. Tu peux avoir 2 semaines de contenu prêt en moins d'une heure.</p>
+        </div>
+      </div>
+    </div>
+
+    <h4 style="margin: 40px 0 18px; font-size: 1.2rem;">🔍 Workflow 4 — Veille sectorielle automatisée (1h/jour → 15 min)</h4>
+    <div class="workflow">
+      <div class="workflow-step">
+        <div class="step-circle">1</div>
+        <div class="step-body">
+          <h4>Centraliser les sources</h4>
+          <p>Utilise un agrégateur RSS (comme Feedly) pour regrouper tes sources d'information. Une fois par semaine, copie-colle les titres et résumés dans l'IA.</p>
+        </div>
+      </div>
+      <div class="workflow-step">
+        <div class="step-circle">2</div>
+        <div class="step-body">
+          <h4>Synthèse et filtrage par l'IA</h4>
+          <p>Prompt : "Voici 30 titres d'actualités de la semaine dans mon secteur : [liste]. Identifie les 5 plus importantes pour [ton rôle], explique pourquoi, et donne les implications concrètes pour mon travail."</p>
+        </div>
+      </div>
+      <div class="workflow-step">
+        <div class="step-circle">3</div>
+        <div class="step-body">
+          <h4>Transformer en newsletter interne</h4>
+          <p>Prompt : "À partir de cette synthèse, rédige une mini-newsletter de 300 mots à partager avec mon équipe, dans un ton [professionnel / décontracté]."</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CHAPTER 6 : ERREURS -->
+<section id="erreurs">
+  <div class="chapter">
+    <div class="chapter-num">Chapitre 06</div>
+    <h3>Les 7 erreurs classiques des débutants (et comment les éviter)</h3>
+    <p>Ces erreurs sont universelles. Tout le monde les fait au début. Les connaître à l'avance te fera gagner des semaines de frustration.</p>
+
+    <div class="mistakes-grid">
+      <div class="mistake-card">
+        <div class="mistake-label bad">❌ Erreur #1</div>
+        <h4>Le prompt trop vague</h4>
+        <p>"Écris-moi quelque chose sur le marketing." — L'IA ne sait pas ce que tu veux vraiment. Elle va produire quelque chose de générique et inutilisable.</p>
+      </div>
+      <div class="mistake-card good">
+        <div class="mistake-label good">✅ À faire</div>
+        <h4>Donner contexte + objectif + contraintes</h4>
+        <p>"Je suis consultant en marketing B2B. Écris un post LinkedIn de 200 mots pour expliquer pourquoi le tracking analytics est souvent mal configuré en PME. Ton : expert mais accessible."</p>
+      </div>
+
+      <div class="mistake-card">
+        <div class="mistake-label bad">❌ Erreur #2</div>
+        <h4>Accepter la première réponse</h4>
+        <p>La première réponse est rarement la meilleure. L'IA fait des compromis pour être "correcte en moyenne". Elle ne sait pas exactement ce que tu veux si tu ne le lui dis pas.</p>
+      </div>
+      <div class="mistake-card good">
+        <div class="mistake-label good">✅ À faire</div>
+        <h4>Itérer avec des feedbacks précis</h4>
+        <p>Dis : "C'est bien, mais je veux que le ton soit plus direct et moins formel. Réécris l'introduction en changeant X." ou "Donne-moi 3 alternatives pour le titre."</p>
+      </div>
+
+      <div class="mistake-card">
+        <div class="mistake-label bad">❌ Erreur #3</div>
+        <h4>Faire confiance aveuglément aux chiffres et faits</h4>
+        <p>L'IA peut inventer des statistiques qui semblent réelles. Ces "hallucinations" sont courantes, surtout pour des données spécifiques, des citations, ou des événements récents.</p>
+      </div>
+      <div class="mistake-card good">
+        <div class="mistake-label good">✅ À faire</div>
+        <h4>Toujours vérifier les données importantes</h4>
+        <p>Si tu utilises une statistique dans un document professionnel, vérifie-la sur la source primaire. Demande à l'IA de citer ses sources et vérifie-les indépendamment.</p>
+      </div>
+
+      <div class="mistake-card">
+        <div class="mistake-label bad">❌ Erreur #4</div>
+        <h4>Ignorer le contexte métier</h4>
+        <p>L'IA ne connaît pas ta boîte, ton client, ton historique, tes contraintes internes. Sans ce contexte, elle produit des réponses génériques qui ne collent pas à ta réalité.</p>
+      </div>
+      <div class="mistake-card good">
+        <div class="mistake-label good">✅ À faire</div>
+        <h4>Créer un "contexte de départ" réutilisable</h4>
+        <p>Prépare un paragraphe qui décrit ton rôle, ton secteur, ton audience, et tes contraintes. Colle-le au début de chaque nouvelle conversation pour contextualiser l'IA.</p>
+      </div>
+
+      <div class="mistake-card">
+        <div class="mistake-label bad">❌ Erreur #5</div>
+        <h4>Utiliser l'IA pour tout d'un coup</h4>
+        <p>Vouloir tout automatiser en une semaine mène à l'échec. On essaie 10 outils, on abandonne tous, et on retourne à ses anciennes habitudes découragé.</p>
+      </div>
+      <div class="mistake-card good">
+        <div class="mistake-label good">✅ À faire</div>
+        <h4>Commencer par un seul cas d'usage</h4>
+        <p>Choisis LA tâche répétitive qui te prend le plus de temps. Maîtrise l'IA sur cette seule tâche pendant 2 semaines. Puis étends progressivement. Qualité avant quantité.</p>
+      </div>
+
+      <div class="mistake-card">
+        <div class="mistake-label bad">❌ Erreur #6</div>
+        <h4>Envoyer du contenu IA non relu</h4>
+        <p>Un contenu généré par IA sans révision humaine se repère souvent : ton générique, formulations répétitives, manque de précision métier. Cela peut nuire à ta crédibilité.</p>
+      </div>
+      <div class="mistake-card good">
+        <div class="mistake-label good">✅ À faire</div>
+        <h4>L'IA génère, toi tu édites</h4>
+        <p>Pense à l'IA comme à un premier jet très rapide. Tu n'écris plus de zéro, mais tu peaufines. Ajoute tes anecdotes, tes chiffres réels, ta voix. C'est 80% du travail économisé.</p>
+      </div>
+
+      <div class="mistake-card">
+        <div class="mistake-label bad">❌ Erreur #7</div>
+        <h4>Ne pas prendre en compte la confidentialité</h4>
+        <p>Coller des données clients confidentielles, des contrats, ou des informations sensibles d'entreprise dans ChatGPT public peut être une violation de confidentialité ou de RGPD.</p>
+      </div>
+      <div class="mistake-card good">
+        <div class="mistake-label good">✅ À faire</div>
+        <h4>Anonymiser les données sensibles</h4>
+        <p>Remplace les noms de clients, chiffres confidentiels et données personnelles par des placeholders avant d'utiliser l'IA. Ou utilise une version enterprise avec accord de confidentialité (ChatGPT Team, Claude for Work).</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CHAPTER 7 : PLAN D'ACTION -->
+<section id="plan-action">
+  <div class="chapter">
+    <div class="chapter-num">Chapitre 07</div>
+    <h3>Ton plan d'action sur 30 jours — de zéro à productif</h3>
+    <p>Voici un plan concret et progressif pour passer de "je ne sais pas par où commencer" à "je gagne plusieurs heures par semaine grâce à l'IA".</p>
+
+    <h4 style="margin: 28px 0 18px; font-size: 1.1rem; color: var(--highlight);">📅 Semaine 1 — Exploration (objectif : te sentir à l'aise)</h4>
+    <div class="workflow">
+      <div class="workflow-step">
+        <div class="step-circle">J1</div>
+        <div class="step-body">
+          <h4>Crée ton compte Claude.ai ou ChatGPT</h4>
+          <p>Version gratuite. Passe 20 minutes à explorer l'interface. Pose des questions sur ton secteur, demande-lui d'expliquer un concept que tu maîtrises — juge la qualité.</p>
+        </div>
+      </div>
+      <div class="workflow-step">
+        <div class="step-circle">J2</div>
+        <div class="step-body">
+          <h4>Utilise le premier prompt de ce guide</h4>
+          <p>Prends un vrai email que tu dois écrire. Utilise le prompt email de ce guide. Compare avec ce que tu aurais écrit. Améliore la réponse avec 1-2 retours.</p>
+        </div>
+      </div>
+      <div class="workflow-step">
+        <div class="step-circle">J3-7</div>
+        <div class="step-body">
+          <h4>Identifie ta tâche répétitive numéro 1</h4>
+          <p>Pendant 5 jours, note chaque tâche que tu fais. Laquelle est la plus répétitive ? La plus longue ? La moins gratifiante ? C'est celle sur laquelle tu vas te concentrer.</p>
+        </div>
+      </div>
+    </div>
+
+    <h4 style="margin: 36px 0 18px; font-size: 1.1rem; color: var(--highlight);">📅 Semaine 2 — Maîtrise (objectif : avoir un premier vrai gain de temps)</h4>
+    <div class="workflow">
+      <div class="workflow-step">
+        <div class="step-circle">J8</div>
+        <div class="step-body">
+          <h4>Crée ton prompt "contexte entreprise"</h4>
+          <p>Rédige un paragraphe sur toi, ton rôle, ton secteur, ton audience principale, et tes contraintes. Colle-le au début de chaque session IA. Observe la différence de qualité.</p>
+        </div>
+      </div>
+      <div class="workflow-step">
+        <div class="step-circle">J9-14</div>
+        <div class="step-body">
+          <h4>Utilise l'IA chaque jour sur ta tâche cible</h4>
+          <p>Pendant 6 jours, utilise systématiquement l'IA pour ta tâche répétitive identifiée. Affine tes prompts. Note le temps économisé. La régularité crée l'habitude.</p>
+        </div>
+      </div>
+    </div>
+
+    <h4 style="margin: 36px 0 18px; font-size: 1.1rem; color: var(--highlight);">📅 Semaine 3-4 — Expansion (objectif : créer une routine IA durable)</h4>
+    <div class="workflow">
+      <div class="workflow-step">
+        <div class="step-circle">J15</div>
+        <div class="step-body">
+          <h4>Ajoute un 2ème cas d'usage</h4>
+          <p>Choisis une deuxième tâche et applique le même processus. Après 2 semaines de pratique, tu verras que tu identifies naturellement les opportunités d'utiliser l'IA.</p>
+        </div>
+      </div>
+      <div class="workflow-step">
+        <div class="step-circle">J20</div>
+        <div class="step-body">
+          <h4>Explore un outil d'automatisation</h4>
+          <p>Si tu utilises des outils comme Gmail, Notion, ou Slack, inscris-toi à Zapier (gratuit). Crée ta première automatisation simple (ex: notification Slack quand tu reçois un email de certains contacts).</p>
+        </div>
+      </div>
+      <div class="workflow-step">
+        <div class="step-circle">J30</div>
+        <div class="step-body">
+          <h4>Bilan et ajustement</h4>
+          <p>Qu'est-ce qui a bien marché ? Qu'est-ce qui t'a pris du temps sans valeur ? Affine ta liste de prompts favoris. Pense à partager ce qui t'a le mieux servi avec ton équipe.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout callout-tip">
+      <div class="callout-icon">🎯</div>
+      <div>
+        <strong>L'objectif réaliste après 30 jours</strong>
+        <p>Si tu appliques ce plan honnêtement, tu devrais économiser <strong>entre 3 et 8 heures par semaine</strong> sur des tâches répétitives. Ce n'est pas magique — c'est une compétence qui s'apprend. La plupart des gens abandonnent après 3 jours parce qu'ils ne voient pas les résultats immédiats. Les résultats viennent à la semaine 2-3, quand tu commences à avoir des réflexes.</p>
+      </div>
+    </div>
+
+    <div class="callout callout-warn">
+      <div class="callout-icon">🔒</div>
+      <div>
+        <strong>Note sur la confidentialité des données</strong>
+        <p>Avant d'utiliser ces outils dans un cadre professionnel, vérifier la politique de confidentialité des outils que tu utilises. Pour les données sensibles ou celles de tes clients, considère des versions "enterprise" (ChatGPT Team, Claude for Work) qui offrent des garanties contractuelles sur la non-utilisation de tes données pour l'entraînement des modèles. Renseigne-toi aussi sur les politiques de ta propre entreprise concernant l'usage de l'IA.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CONCLUSION -->
+<section>
+  <div style="text-align:center; padding: 40px 0 80px;">
+    <div class="section-label">🏁 Pour conclure</div>
+    <h2 style="max-width: 700px; margin: 0 auto 24px;">L'IA est un <span>levier</span>, pas une solution magique</h2>
+    <p style="color:var(--text-muted); max-width:580px; margin:0 auto 40px; font-size:1.05rem;">Les professionnels qui en tirent le plus de valeur ne cherchent pas à tout automatiser. Ils identifient les 2-3 tâches où l'IA leur fait vraiment gagner du temps, les maîtrisent, puis étendent progressivement. Commence petit, commence maintenant.</p>
+    <a href="#toc" class="btn-primary" style="display:inline-block;">🔝 Revenir au sommaire</a>
+  </div>
+</section>
+
+<footer>
+  <p style="margin-bottom:10px;">📘 <strong>AI Sans Jargon</strong> — Guide Pratique Édition 2025</p>
+  <p>Ce guide a été rédigé avec rigueur et à des fins éducatives. Les prix et fonctionnalités des outils mentionnés peuvent évoluer. Vérifiez toujours les sites officiels pour les informations les plus récentes.</p>
+  <p style="margin-top:14px; font-size:.8rem;">Sources citées : McKinsey Global Institute, Harvard Business School (2023), Zapier Blog, DigitalOcean, Notta.ai Research — 2024-2025.</p>
+</footer>
+
+<button id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+  // Progress bar
+  window.addEventListener('scroll', () => {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = (scrollTop / docHeight) * 100;
+    document.getElementById('progress-bar').style.width = progress + '%';
+
+    // Back to top button
+    const btn = document.getElementById('back-top');
+    if (scrollTop > 400) btn.classList.add('visible');
+    else btn.classList.remove('visible');
+
+    // Scrollspy
+    const sections = ['hero','toc','intro','comprendre','outils','prompts','workflows','erreurs','plan-action'];
+    const dots = document.querySelectorAll('.spy-dot');
+    sections.forEach((id, i) => {
+      const el = document.getElementById(id);
+      if (el) {
+        const rect = el.getBoundingClientRect();
+        if (rect.top <= 120 && rect.bottom >= 120) {
+          dots.forEach(d => d.classList.remove('active'));
+          if (dots[i]) dots[i].classList.add('active');
+        }
+      }
+    });
+  });
+
+  // Scrollspy clicks
+  const sections = ['hero','toc','intro','comprendre','outils','prompts','workflows','erreurs','plan-action'];
+  document.querySelectorAll('.spy-dot').forEach((dot, i) => {
+    dot.addEventListener('click', () => {
+      const el = document.getElementById(sections[i]);
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+
+  // Copy prompt
+  function copyPrompt(btn) {
+    const box = btn.parentElement;
+    const text = box.querySelector('p') ? box.querySelector('p').innerText : '';
+    navigator.clipboard.writeText(text).then(() => {
+      btn.textContent = '✓ Copié !';
+      btn.style.background = 'rgba(6,214,160,.4)';
+      btn.style.color = '#06D6A0';
+      setTimeout(() => {
+        btn.textContent = 'Copier';
+        btn.style.background = 'rgba(108,58,234,.3)';
+        btn.style.color = '';
+      }, 2000);
+    });
+  }
+
+  // Smooth anchor scrolling with offset for fixed nav
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const id = a.getAttribute('href').slice(1);
+      const el = document.getElementById(id);
+      if (el) {
+        e.preventDefault();
+        const top = el.getBoundingClientRect().top + window.scrollY - 80;
+        window.scrollTo({ top, behavior: 'smooth' });
+      }
+    });
+  });
+</script>
+</body>
+</html>
